@@ -7,7 +7,7 @@ class CharactersProvider extends ChangeNotifier {
   String? imagePath;
   String promptText = "";
   String accessToken = "";
-  List<String> generatedImages = [];
+  List generatedImages = [];
   String? selectedImageUrl;
 
   selectImage(String imageUrl) {
@@ -35,7 +35,7 @@ class CharactersProvider extends ChangeNotifier {
           'https://dev.newtype-backend.zazz.buzz/api/characters/profile-images'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization': '$accessToken'
+        'Authorization': 'Bearer $accessToken'
       },
       body: jsonEncode({
         "prompt": promptText,
@@ -45,9 +45,9 @@ class CharactersProvider extends ChangeNotifier {
         "gender": gender
       }),
     );
-    if (response.statusCode == 200) {
+    if (response.statusCode == 201) {
       generatedImages = jsonDecode(response.body)["result"];
     }
-    print(generatedImages);
+    notifyListeners();
   }
 }
