@@ -4,13 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:talkie_ai/provider_pattern/providers/characters_provider.dart';
+import 'package:talkie_ai/provider_pattern/screens/generated_image_selection.dart';
 
-class CreateImageScreen extends StatefulWidget {
+class CreateImageWidget extends StatefulWidget {
   @override
-  _CreateImageScreenState createState() => _CreateImageScreenState();
+  _CreateImageWidgetState createState() => _CreateImageWidgetState();
 }
 
-class _CreateImageScreenState extends State<CreateImageScreen> {
+class _CreateImageWidgetState extends State<CreateImageWidget> {
   File? _selectedImage;
   final TextEditingController _promptController = TextEditingController();
 
@@ -144,7 +145,13 @@ class _CreateImageScreenState extends State<CreateImageScreen> {
                 height: 40,
                 child: ElevatedButton(
                   onPressed: () {
-
+                    final provider=Provider.of<CharactersProvider>(context,listen: false);
+                    provider.promptText=_promptController.text;
+                    Provider.of<CharactersProvider>(context,listen: false).generateCharacterImage();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const GeneratedImageSelectionWidget()),
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.yellow,

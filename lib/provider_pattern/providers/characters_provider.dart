@@ -7,7 +7,12 @@ class CharactersProvider extends ChangeNotifier {
   String? imagePath;
   String promptText = "";
   String accessToken = "";
+  List<String> generatedImages = [];
+  String? selectedImageUrl;
 
+  selectImage(String imageUrl) {
+    this.selectedImageUrl = imageUrl;
+  }
 
   loginUsingDeviceId() async {
     final response = await http.post(
@@ -22,9 +27,27 @@ class CharactersProvider extends ChangeNotifier {
       accessToken = jsonDecode(response.body)["accessToken"];
     }
   }
-  generateCharacterImage() async
-  {
 
+  generateCharacterImage() async {
+    generatedImages = [];
+    final response = await http.post(
+      Uri.parse(
+          'https://dev.newtype-backend.zazz.buzz/api/characters/profile-images'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': '$accessToken'
+      },
+      body: jsonEncode({
+        "prompt": promptText,
+        "imageUrl": null,
+        "numOutputs": 6,
+        "style": "anime",
+        "gender": gender
+      }),
+    );
+    if (response.statusCode == 200) {
+      generatedImages = jsonDecode(response.body)["result"];
+    }
+    print(generatedImages);
   }
-
 }

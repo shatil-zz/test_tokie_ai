@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:talkie_ai/provider_pattern/providers/characters_provider.dart';
-import 'package:talkie_ai/provider_pattern/screens/create_image_screen.dart';
+import 'package:talkie_ai/provider_pattern/screens/create_image_widget.dart';
 
 class GenderSelectionWidget extends StatefulWidget {
   const GenderSelectionWidget({super.key});
@@ -35,10 +35,10 @@ class _GenderSelectionWidgetState extends State<GenderSelectionWidget> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                _buildGenderOption('assets/male.png', 'Boy', 'male'),
-                _buildGenderOption('assets/female.png', 'Girl', 'female'),
+                _buildGenderOption('assets/male.png', 'Boy', 'Male'),
+                _buildGenderOption('assets/female.png', 'Girl', 'Female'),
                 _buildGenderOption(
-                    'assets/non_binary.png', 'Non-Binary', 'non_binary'),
+                    'assets/non_binary.png', 'Non-Binary', 'Other'),
               ],
             ),
             const SizedBox(height: 40),
@@ -94,7 +94,7 @@ class _GenderSelectionWidgetState extends State<GenderSelectionWidget> {
         _selectedGender;
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => CreateImageScreen()),
+      MaterialPageRoute(builder: (context) => CreateImageWidget()),
     );
   }
 }
