@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:talkie_ai/provider_pattern/providers/characters_provider.dart';
+import 'package:talkie_ai/provider_pattern/screens/create_image_screen.dart';
 
 class GenderSelectionWidget extends StatefulWidget {
   const GenderSelectionWidget({super.key});
@@ -16,6 +17,11 @@ class _GenderSelectionWidgetState extends State<GenderSelectionWidget> {
     setState(() {
       _selectedGender = gender;
     });
+  }
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<CharactersProvider>(context,listen: false).loginUsingDeviceId();
   }
 
   @override
@@ -86,6 +92,9 @@ class _GenderSelectionWidgetState extends State<GenderSelectionWidget> {
   void _startAction() {
     Provider.of<CharactersProvider>(context, listen: false).gender =
         _selectedGender;
-    //Navigator.of(context).push();
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => CreateImageScreen()),
+    );
   }
 }
